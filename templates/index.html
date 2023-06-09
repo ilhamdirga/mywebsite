@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{title}}
+{% endblock title %}
+
+
+{% block list %}
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'person_detector:home' %}">Person Detector</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'memory_tray_detector:home' %}">Memory Tray Detector</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'trash_can_detector:home' %}">Trash Can Detector</a>
+  </li>    
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#logout">Logout</a>
+  </li>
+{% endblock list %}
+
+
+{% block style %}
+    <style>
+    body {
+        background-color: #0A306A;
+    }
+    </style>
+{% endblock style %}
+    
+
+
+{% block content %}
+    <div class="container mt-3" style="font-family: 'Poppins', sans-serif; font-weight: 400;">
+    
+        <!-- modal untuk logout -->
+        <div class="modal fade" id="logout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-main text-light">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">LOGOUT</h1>
+                <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                Are you sure to <strong>Logout</strong>?
+                </div>
+                <div class="modal-footer">
+                <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <h1 class="text-center text-light mt-5">Person and Object Detectors</h1>
+
+        <!-- Jumbotron -->
+        <section class="jumbotron text-center " id="jumbotron">
+            <img src="{% static 'images/main/jumbotron.png' %}" alt="" width="450" class="jumbotron-img">
+            <h1 class="text-light mt-4">Welcome, <strong>{{user.first_name}}</strong>!</h1>
+        </section>
+        <!-- Akhir Jumbotron -->
+    
+    
+    </div>
+{% endblock content %}
+    
+    
+    

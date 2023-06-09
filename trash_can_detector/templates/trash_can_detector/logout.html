@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock title %}
+    
+{% block list %}
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'trash_can_detector:home' %}">Home</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'trash_can_detector:camera' %}">Camera</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'trash_can_detector:gallery' %}">Gallery</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link active" aria-current="page" href="{% url 'trash_can_detector:logout' %}">Log Out</a>
+  </li>    
+{% endblock list %}
+
+{% block content %}
+    <h5>Trash Can Detector | Gallery</h5>
+{% endblock content %}
+    

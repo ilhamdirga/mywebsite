@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    {{title}}
+{% endblock title %}
+
+{% block list %}
+  <li class="nav-item ps-4">
+    <a class="nav-link active" aria-current="page" href="{% url 'trash_can_detector:home' %}">Home</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'trash_can_detector:camera' %}">Camera</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'trash_can_detector:gallery' %}">Gallery</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#logout-user">Logout</a>
+  </li>    
+{% endblock list %}
+
+
+{% block content %}
+ 
+  <div class="container mt-3" style="font-family: 'Poppins', sans-serif; font-weight: 400;">
+
+    <!-- modal untuk logout -->
+    <div class="modal fade" id="logout-user" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-main text-light">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">LOGOUT</h1>
+            <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure to <strong>Logout</strong>?
+          </div>
+          <div class="modal-footer">
+            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <h5>Trash Can Detector | Home </h5>
+      <h5>Active | {{user.first_name}}</h5>
+    </div>
+
+    <!-- messages -->
+    <div>
+      {% if messages %}
+        {% for msg in messages %}
+            <div class="alert {% if msg.tags == 'success' %}alert-success{% elif msg.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show d-sm-inline-flex" role="alert">
+                {{ msg }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- alert -->
+    <div class="alert alert-primary" role="alert">
+      You can predict the trash-can capacity by uploading a photo via the <strong>POST</strong> button or capturing it directly using the <strong>Open Camera</strong> button below.
+    </div>
+
+    <!-- Submit Picture -->
+    <div class="row mt-2 mb-2">
+      <div class="col">
+        <div class="card card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <form method="POST" enctype="multipart/form-data" class="row g-2 align-items-center">
+                {% csrf_token %}
+                <div class="col-auto align-middle">
+                  {{forms.name.label}}
+                </div>
+                <div class="col-auto">
+                    {{forms.name}}
+                </div>   
+                
+
+                <div class="col-auto align-middle">
+                  {{forms.picture.label}}
+                </div>
+                <div class="col-auto">
+                  {{forms.picture}}
+                </div> 
+               
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-primary">POST</button>
+                </div>
+              </form>
+            </div>
+            <div>
+              <p>Total Current Trash Can : <strong>{{total_trash_can}}</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h5>Trash-Can Information</h5>
+
+    <!-- Card -->
+    <div class="align-items-center">
+      <div class="row">
+        <div class="row justify-content-start">
+        {% for card in cam_card %}
+          <div class="col-sm-3 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-header bg-main text-light">
+                <h5 class="card-title text-center">{{card.name}}</h5>
+              </div>
+              <div class="card-body">
+                    <p class="card-text"><strong>Capacity:</strong>
+                      {% for latest_gallery in latest_galleries %}
+                        {% if latest_gallery.name.id == card.name.id %}
+                          {{latest_gallery.capacity}}                          
+                        {% endif %}
+                      {% endfor %}
+                    </p>
+                    <p class="card-text"><strong>Time Last Detected:</strong>
+                      {% for latest_gallery in latest_galleries %}
+                        {% if latest_gallery.name.id == card.name.id %}
+                          {{latest_gallery.timestamp}}
+                        {% endif %}
+                      {% endfor %}
+                    </p>
+                <!-- {% for latest_gallery in latest_galleries %}
+                  {% if latest_gallery.name.id == card.name.id %}
+                    <p class="card-text"><strong>Quantity:</strong> {{latest_gallery.quantity}}</p>
+                    <p class="card-text"><strong>Time Last Count:</strong> {{latest_gallery.timestamp}}</p>
+                    
+                  {% endif %}
+                {% endfor %} -->
+
+
+                <div class="text-center">
+                  <a href="{% url 'trash_can_detector:open-cam' camera_id=card.name.id%}" class="btn btn-primary">Open Ip Camera</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      </div>
+    </div> 
+    <!-- Akhir Card -->
+
+  </div>
+{% endblock content %}
+  
+    

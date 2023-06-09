@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    {{title}}    
+{% endblock title %}
+
+    
+
+{% block content %}
+ <div class="container">
+
+ 
+    <!-- messages -->
+ {% if messages %}
+ {% for msg in messages %}
+     <div class="alert {% if msg.tags == 'success' %}alert-success{% elif msg.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show d-sm-inline-flex mt-2" role="alert">
+         {{ msg }}
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+     </div>
+ {% endfor %}
+{% endif %}
+
+
+<!-- Login Card -->
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-main text-light align-middle">
+                    <h6 class="text-center">LOGIN PAGE | MEMORY TRAY DETECTOR DETECTOR</h6>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+    
+                        <div class="col-auto">
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username">
+                          </div>
+                          <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                          </div>
+    
+                          <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>    
+
+{% endblock content %}
+    

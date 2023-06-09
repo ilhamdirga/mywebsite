@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{title}}
+{% endblock title %}
+
+{% block list %}
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'memory_tray_detector:home' %}">Home</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'memory_tray_detector:camera' %}">Camera</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'memory_tray_detector:gallery' %}">Gallery</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link active" aria-current="page" href="{% url 'memory_tray_detector:logout' %}">Log Out</a>
+  </li>    
+{% endblock list %}

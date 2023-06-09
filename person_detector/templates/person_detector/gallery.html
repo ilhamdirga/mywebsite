@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block list %}
+<li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'person_detector:home' %}">Home</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'person_detector:database' %}">Database</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'person_detector:logout' %}">Logout</a>
+  </li>    
+{% endblock list %}
+    
+
+{% block title %}
+    {{title}}
+{% endblock title %}
+    

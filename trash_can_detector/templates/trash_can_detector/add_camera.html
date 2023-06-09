@@ -1,0 +1,27 @@
+{% extends 'trash_can_detector/camera.html' %}
+
+{% block add_camera %}
+    
+    <div class="container shadow rounded mt-3">
+        <h5>{{title}}</h5>
+        <form method="POST" enctype="multipart/form-data" class="col">
+            {% csrf_token %}
+                
+            {% for form in add_form %}
+                <div class="col-auto">
+                    {{form.label}}
+                </div>                        
+                        
+                <div class="col-auto">
+                    {{form}}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-success my-4">Submit</button>
+            <a href="{% url 'trash_can_detector:camera' %}" class="btn btn-danger">Back</a>
+
+        </form>
+    </div> 
+
+{% endblock add_camera %}
+    

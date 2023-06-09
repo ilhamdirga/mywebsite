@@ -1,0 +1,56 @@
+{% extends 'person_detector/database.html' %}
+
+{% block add_database %}
+        
+        <div class="container shadow rounded mt-3">
+            <h5>{{title}}</h5>
+            <form method="POST" enctype="multipart/form-data" class="col">
+                {% csrf_token %}
+
+                <div class="col-auto">
+                    <label for="" class="form-label">Name</label>
+                    <input type="text" Required name="name" value="{{form.name}}" class="form-control" disabled>
+                </div>
+                <div class="col-auto">
+                    <label for="" class="form-label">Full Name</label>
+                    <input type="text" Required name="fullName" value="{{form.fullName}}" class="form-control">
+                </div>
+                <div class="col-auto">
+                    
+                    <label for="" class="form-label">Picture</label>
+                    <input type="file" name="picture" class="form-control">
+                    {% if form.picture %}
+                       <div class="">
+                        <p>Current Picture:</p>
+                        <img src="{{form.picture.url}}" alt="" width="110px"> 
+                       </div>                 
+                    {% endif %}
+                        
+                    
+                    
+                </div>
+                    
+                <!-- {% for form in post_form %}
+                    <div class="col-auto">
+                        {{form.label}}
+                    </div>                        
+                            
+                    <div class="col-auto">
+                        {{form}}
+                    </div>
+                {% endfor %}
+                {% if update_data.picture %}
+                    <img src="{{update_data.picture.url}}" alt="" width="90px">
+                {% endif %}  -->
+
+                <div>
+                    <button type="submit" class="btn btn-success my-4">{{action}}</button>
+                    <a href="{% url 'person_detector:database' %}" class="btn btn-danger">Back</a>
+                </div>
+
+            </form>
+        </div>
+{% endblock add_database %}
+
+
+    

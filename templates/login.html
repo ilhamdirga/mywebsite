@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    {{title}}    
+{% endblock title %}
+
+{% block style %}
+    <style>
+    body {
+        background-color: #0A306A;
+    }
+    </style>
+{% endblock style %}
+    
+
+{% block content %}
+ <div class="container">
+
+ 
+ 
+<br><br><br><br>
+
+<!-- Login Card -->
+    <div class="row justify-content-center align-items-center mt-5">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-main text-light align-middle">
+                    <h6 class="text-center">LOGIN PAGE</h6>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                           <!-- messages -->
+                            {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert {% if msg.tags == 'success' %}alert-success{% elif msg.tags == 'error' %}alert-info{% endif %} alert-dismissible fade show d-sm-inline-flex mt-2" role="alert">
+                                    {{ msg }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                            {% endif %}
+
+                         <div class="col-auto mb-2">
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username">
+                          </div>
+                          <div class="col-auto mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password"> 
+                          </div>
+    
+                          <button type="submit" class="btn" style="background-color: #0A306A; color: white;">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>    
+
+{% endblock content %}
+    

@@ -1,0 +1,30 @@
+{% extends 'person_detector/database.html' %}
+
+
+{% block add_database %}
+
+<div class="container shadow rounded mt-3">
+    <h5>{{title}}</h5>
+    <form method="POST" enctype="multipart/form-data" class="col">
+        {% csrf_token %}
+            
+        {% for form in form %}
+            <div class="col-auto">
+                {{form.label}}
+            </div>                        
+                    
+            <div class="col-auto">
+                {{form}}
+            </div>
+        {% endfor %}
+
+        <div>
+            <button type="submit" class="btn btn-success my-4">{{action}}</button>
+            <a href="{% url 'person_detector:database' %}" class="btn btn-danger">Back</a>
+        </div>
+
+    </form>
+</div>
+    
+{% endblock add_database %}
+    

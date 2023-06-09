@@ -1,0 +1,25 @@
+
+.jumbotron img {
+  /* Add any other styles for your image here */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Style untuk gambar ketika di-hover */
+.jumbotron img:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+
+@media (max-width : 576px) {
+
+  #jumbotron img{
+      width: 90%;
+  }
+
+  .jumbotron img:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+  }
+
+}

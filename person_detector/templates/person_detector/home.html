@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    {{title}}
+{% endblock title %}
+
+
+{% block list %}
+<li class="nav-item ps-4">
+    <a class="nav-link active" aria-current="page" href="{% url 'person_detector:home' %}">Home</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="{% url 'person_detector:database' %}">Database</a>
+  </li>
+  <li class="nav-item ps-4">
+    <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#logout-user">Logout</a>
+  </li>    
+{% endblock list %}
+    
+
+{% block content %}
+
+<div class="container mt-3" style="font-family: 'Poppins', sans-serif; font-weight: 400;">
+
+  <!-- modal untuk logout -->
+  <div class="modal fade" id="logout-user" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-main text-light">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">LOGOUT</h1>
+          <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure to <strong>Logout</strong>?
+        </div>
+        <div class="modal-footer">
+          <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <h5>Person Detector | Home </h5>
+    <h5>Active | {{user.first_name}}</h5>
+  </div>
+
+     <!-- messages -->
+     <div>
+      {% if messages %}
+        {% for msg in messages %}
+            <div class="alert {% if msg.tags == 'success' %}alert-success{% elif msg.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show d-sm-inline-flex" role="alert">
+                {{ msg }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="align-middle">
+      <a href="{% url 'person_detector:open_cam' %}" class="btn btn-success my-1">START DETECTION</a>
+    </div>   
+    <p class="mb-0 mt-0 d-flex align-items-end">Current Data : <strong>{{total_data}}</strong></p>
+  </div>
+
+  <!-- messages -->
+  <!-- {% if messages %}
+        {% for msg in messages %}
+            <div class="alert {% if msg.tags == 'success' %}alert-success{% elif msg.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show d-sm-inline-flex" role="alert">
+                {{ msg }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+      {% endif %} -->
+  
+      <!-- <div class="d-flex justify-content-between mt-2">
+        <h5 class="me-2">Detected Name Record</h5>
+      </div> -->
+
+  <!-- <p class="mb-0 mt-0">Current Data : <strong>{{total_data}}</strong></p> -->
+
+  <!-- Filter -->
+  <div class="row mt-2 mb-2">
+    <div class="col">
+      <div class="card card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <form method="GET" class="row g-2 align-items-center">
+              <div class="col-auto align-middle">
+                {{myFilters.form.name.label}}
+              </div>
+              <div class="col-auto">
+                {{myFilters.form.name}}
+              </div>
+              <div class="col-auto align-middle">
+                {{myFilters.form.detected_time.label}}
+              </div>
+              <div class="col-auto">
+                {{ myFilters.form.detected_time }}
+              </div>
+              <div class="col-auto align-middle">
+                {{myFilters.form.start_date.label}}
+              </div>
+              <div class="col-auto">
+                <input type="text" id="start_date" name="start_date" class="form-control datepicker" placeholder="Choose Date">
+              </div>
+              <div class="col-auto align-middle">
+                <label for="end_date">{{myFilters.form.end_date.label}}</label>
+              </div>
+              <div class="col-auto">
+                <input type="text" id="end_date" name="end_date" class="form-control datepicker" placeholder="Choose Date">
+              </div>
+              
+              <!-- <div class="d-sm-inline-flex"> -->
+                <div class="col-auto pe-2">
+                  <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+                <div class="col-auto">
+                  <a href="{% url 'person_detector:home' %}" class="btn btn-danger">Back to All</a>
+                </div>
+              <!-- </div> -->
+            </form>
+          </div>
+          <!-- <div>
+            <p>Current Data : <strong>{{total_data}}</strong></p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Akhir Filter-->
+
+  <div class="d-flex justify-content-between mb-1">
+    <h5 class="me-2">Detected Name Record</h5>
+    <div>
+      <a href="{% url 'person_detector:export-detected-face' %}" class="btn btn-sm btn-success">Download All Record</a>
+      <button type="button" href="" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#reset-detected-face-record">Reset All Record</button>
+    </div>
+  </div>
+  <!-- Modal untuk reset detected face -->
+  <div class="modal fade" id="reset-detected-face-record" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-main text-light">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Reset ALL</h1>
+          <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure to <strong>RESET ALL</strong> detected face records?
+        </div>
+        <div class="modal-footer">
+          <a href="{% url 'person_detector:reset-all-detected-face' %}" class="btn btn-danger">RESET ALL</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- Tabel -->
+  <div class="scroll">
+    <table class="table table-striped table-hover table-bordered table-sm rounded rounded-lg">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">No.</th>
+          <th scope="col" class="text-center">Name Detected</th>
+          <th scope="col" class="text-center">Time</th>
+          <!-- <th scope="col" class="text-center">Day</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in detected %}
+          <tr>
+            <td scope="row" class="text-center align-middle">{{forloop.counter}}</td>
+            <td class="text-center align-middle">{{data.name}}</td>
+            <td class="text-center align-middle">{{data.detected_time}}</td>
+            <!-- <td class="text-center align-middle">{{data.detected_day}}</td> -->
+          </tr>
+        {% endfor %}             
+      </tbody>
+    </table>
+  </div>
+  <!-- Akhir Tabel -->
+</div>
+
+<!-- script untuk membuka calender -->
+<script>
+  flatpickr(".datepicker", {
+    dateFormat: "m/d/y",
+  });
+</script>
+
+
+{% endblock content %}
+    
